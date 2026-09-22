@@ -1,0 +1,101 @@
+"""
+test_manufacturing_rules.py
+ 
+Tests the manufacturing rule engine using feasible
+and rejected extrusion candidates.
+"""
+ 
+from manufacturing.process_database import (
+    get_process_capability,
+)
+from manufacturing.rule_engine import (
+    assess_manufacturability,
+)
+from models.design_candidate import DesignCandidate
+ 
+ 
+def print_assessment(
+    title: str,
+    candidate: DesignCandidate,
+) -> None:
+    capability = get_process_capability(
+        "al6063_t5_extrusion"
+    )
+ 
+    assessment = assess_manufacturability(
+        candidate=candidate,
+        capability=capability,
+        maximum_total_height=30.0,
+    )
+ 
+    print()
+    print("=" * 70)
+    print(title)
+    print("=" * 70)
+ 
+    print("Status:", assessment.status)
+    print("Feasible:", assessment.is_feasible)
+ 
+    print()
+    print("Checked rules:")
+ 
+    for rule in assessment.checked_rules:
+        print(f"- {rule}")
+ 
+    if assessment.violations:
+        print()
+        print("Violations:")
+ 
+        for violation in assessment.violations:
+            print(f"- {violation}")
+ 
+    if assessment.warnings:
+        print()
+        print("Warnings:")
+ 
+        for warning in assessment.warnings:
+            print(f"- {warning}")
+ 
+ 
+def main() -> None:
+    feasible_candidate = DesignCandidate(
+        base_thickness=4.0,
+        fin_thickness=1.2,
+        fin_height=10.0,
+        fin_spacing=2.5,
+        fin_count=14,
+        total_height=14.0,
+        reynolds_number=1500.0,
+        nusselt_number=7.54,
+        heat_transfer_coefficient=40.0,
+        thermal_resistance=0.6,
+        estimated_base_temperature=120.0,
+    )
+ 
+    rejected_candidate = DesignCandidate(
+        base_thickness=2.0,
+        fin_thickness=0.5,
+        fin_height=20.0,
+        fin_spacing=1.0,
+        fin_count=20,
+        total_height=22.0,
+        reynolds_number=1800.0,
+        nusselt_number=7.54,
+        heat_transfer_coefficient=45.0,
+        thermal_resistance=0.4,
+        estimated_base_temperature=105.0,
+    )
+ 
+    print_assessment(
+        "FEASIBLE CANDIDATE",
+        feasible_candidate,
+    )
+ 
+    print_assessment(
+        "REJECTED CANDIDATE",
+        rejected_candidate,
+    )
+ 
+ 
+if __name__ == "__main__":
+    main()

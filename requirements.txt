@@ -1,0 +1,7 @@
+# Direct runtime dependencies of Thermal Design Agent.
+# The full V2.0.0 environment snapshot is in requirements-freeze-v2.0.0.txt.
+streamlit==1.58.0
+openai==2.44.0
+python-dotenv==1.2.2
+cadquery==2.8.0
+cadquery-ocp==7.9.3.1.1

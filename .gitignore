@@ -1,0 +1,18 @@
+venv/
+.venv/
+build-venv/
+__pycache__/
+*.pyc
+
+generated/
+
+.streamlit/secrets.toml
+
+.idea/
+.vscode/
+
+.env
+
+# PyInstaller / installer output
+build/
+dist/

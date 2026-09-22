@@ -1,0 +1,22 @@
+from models.thermal import ThermalResults
+
+result = ThermalResults(
+    reynolds_number=1450,
+    hydraulic_diameter=4.62,
+
+    nusselt_number=12.4,
+    heat_transfer_coefficient=82.5,
+
+    fin_count=15,
+    fin_thickness=0.8,
+    fin_spacing=2.5,
+    fin_height=25,
+    base_thickness=5,
+
+    thermal_resistance=0.32,
+    estimated_base_temperature=82.8,
+
+    material="Al6063"
+)
+
+print(result)
